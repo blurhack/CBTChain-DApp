@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CBTChain | Examination Audit Registry</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">CC</div>
+    <div><h1>CBTChain</h1><p>Blockchain-based CBT audit evidence</p></div>
+    <button id="connectBtn" class="primary">Connect MetaMask</button>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">EXAMINATION INTEGRITY • TESTNET PROTOTYPE</p>
+      <h2>Verifiable examination audit records.</h2>
+      <p>Register a file hash and limited event metadata on Sepolia. Verify a file later by comparing its SHA-256 fingerprint with the stored evidence.</p>
+      <div class="wallet-line"><span id="networkDot" class="dot"></span><span id="walletStatus">Wallet not connected</span></div>
+    </section>
+
+    <section class="stats">
+      <article class="stat"><span>Contract status</span><strong id="contractStatus">Not configured</strong></article>
+      <article class="stat"><span>Audit records</span><strong id="auditCount">—</strong></article>
+      <article class="stat"><span>Connected account</span><strong id="accountShort">—</strong></article>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading"><div><p class="eyebrow">01 / REGISTER</p><h2>Register audit evidence</h2></div></div>
+      <p class="muted">Choose a file to calculate its SHA-256 hash locally in your browser. The file itself is not uploaded by this page.</p>
+      <label>Session reference<input id="sessionRef" maxlength="80" placeholder="e.g. CBT-2026-001"></label>
+      <label>Event type<select id="eventType"><option>Question-set version registered</option><option>Examination session started</option><option>Answer file finalized</option><option>Answer file submitted</option><option>Audit review completed</option></select></label>
+      <label>Evidence file<input id="registerFile" type="file"></label>
+      <div class="hashbox"><span>SHA-256 file hash</span><code id="registerHash">Select a file to calculate its hash.</code></div>
+      <button id="registerBtn" class="primary" disabled>Register on blockchain</button>
+      <p class="notice">Only the contract administrator can register records. MetaMask will ask you to approve a Sepolia transaction.</p>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading"><div><p class="eyebrow">02 / VERIFY</p><h2>Verify a recorded file</h2></div></div>
+      <label>Audit record ID<input id="verifyId" type="number" min="1" placeholder="e.g. 1"></label>
+      <label>File to verify<input id="verifyFile" type="file"></label>
+      <div class="hashbox"><span>Calculated SHA-256</span><code id="verifyHash">Choose the file you want to verify.</code></div>
+      <button id="verifyBtn" class="secondary" disabled>Verify against blockchain</button>
+      <div id="verifyResult" class="result hidden"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading"><div><p class="eyebrow">03 / EXPLORE</p><h2>Retrieve audit record</h2></div></div>
+      <label>Audit record ID<input id="lookupId" type="number" min="1" placeholder="e.g. 1"></label>
+      <button id="lookupBtn" class="secondary" disabled>Load record</button>
+      <pre id="recordOutput" class="record-output">No record loaded yet.</pre>
+    </section>
+
+    <section id="message" class="message" role="status">Start by setting the contract address in app.js, then connect MetaMask to Sepolia.</section>
+  </main>
+  <footer>CBTChain academic prototype • Do not store exam papers, candidate answers, or personal data on-chain.</footer>
+  <script src="app.js"></script>
+</body>
+</html>
